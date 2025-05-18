@@ -1,0 +1,42 @@
+.card {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.poster {
+  width: 300px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.score {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.subtitle {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.text {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #666;
+  line-height: 1.5;
+}
