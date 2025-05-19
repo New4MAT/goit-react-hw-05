@@ -5,8 +5,14 @@ import Loader from './components/Loader/Loader';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
+const MovieDetailsPage = lazy(
+  () => import('./pages/MovieDetailsPage/MovieDetailsPage'),
+);
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
+const MovieReviews = lazy(
+  () => import('./components/MovieReviews/MovieReviews'),
+);
 
 export default function App() {
   return (
@@ -26,7 +32,3 @@ export default function App() {
     </>
   );
 }
-
-// Лейзи-імпорт для вкладених компонентів
-const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
-const MovieReviews = lazy(() => import('./components/MovieReviews/MovieReviews'));

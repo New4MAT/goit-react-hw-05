@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchMoviesByQuery } from '../../services/movieAPI.js';
 import SearchForm from '../../components/SearchForm/SearchForm';
@@ -14,18 +14,32 @@ export default function MoviesPage() {
 
   const query = searchParams.get('query') ?? '';
 
-  const handleSearch = async searchQuery => {
-    try {
-      setIsLoading(true);
-      const foundMovies = await fetchMoviesByQuery(searchQuery);
-      setMovies(foundMovies);
-      setSearchParams({ query: searchQuery });
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const searchMovies = useCallback(
+    async searchQuery => {
+      try {
+        setIsLoading(true);
+        const results = await fetchMoviesByQuery(searchQuery);
+        setMovies(results);
+        setSearchParams({ query: searchQuery });
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [setSearchParams],
+  );
+
+  const handleSearch = searchQuery => {
+    if (searchQuery.trim() === '') return;
+    searchMovies(searchQuery);
   };
+
+  useEffect(() => {
+    if (query) {
+      searchMovies(query);
+    }
+  }, [query, searchMovies]);
 
   return (
     <div className={styles.container}>

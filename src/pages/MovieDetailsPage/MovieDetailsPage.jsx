@@ -1,7 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { fetchMovieDetails } from '../../services/movieAPI.js';
-import MovieCard from '../../components/MovieСard/MovieCard.jsx';
+import { useState, useEffect, useRef } from 'react';
+import {
+  useParams,
+  useNavigate,
+  Outlet,
+  useLocation,
+  Link,
+} from 'react-router-dom';
+import { fetchMovieDetails } from '../../services/movieAPI';
+import MovieCard from '../../components/MovieCard/MovieCard';
 import Loader from '../../components/Loader/Loader';
 import styles from './MovieDetailsPage.module.css';
 
@@ -13,7 +19,8 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from || '/movies';
+  // Використовуємо useRef для збереження попереднього маршруту
+  const fromRef = useRef(location.state?.from || '/movies');
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -32,7 +39,7 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const handleGoBack = () => {
-    navigate(from);
+    navigate(fromRef.current);
   };
 
   if (isLoading) return <Loader />;
@@ -49,22 +56,22 @@ export default function MovieDetailsPage() {
         <h2 className={styles.title}>Additional information</h2>
         <ul className={styles.list}>
           <li>
-            <a
-              href={`/movies/${movieId}/cast`}
-              state={{ from }}
+            <Link
+              to={`/movies/${movieId}/cast`}
+              state={{ from: fromRef.current }}
               className={styles.link}
             >
               Cast
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href={`/movies/${movieId}/reviews`}
-              state={{ from }}
+            <Link
+              to={`/movies/${movieId}/reviews`}
+              state={{ from: fromRef.current }}
               className={styles.link}
             >
               Reviews
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
